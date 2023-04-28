@@ -1,0 +1,4 @@
+/build/
+/dist/
+/.idea
+/static_html.egg-info/
