@@ -1,7 +1,7 @@
 class Report:
     """
     This is the main class for the static_html.
-    It takes a List of Lists (max 2 dimensions) of HTML div's and writes them to disk.
+    It takes a List of Lists of HTML div's and writes them to disk.
     The placement of the div's is traditional C-Style, with columns being added horizontally and rows vertically.
     """
 
@@ -14,17 +14,57 @@ class Report:
         :param js_files: The JS file to use
         :param js_libs: A List of JS libraries to use
         """
+        # INPUT DEFAULTS
         if js_libs is None:
             js_libs = []
         if js_files is None:
             js_files = []
         if css_files is None:
             css_files = []
+
+        # INPUT VALIDATION
+        assert isinstance(title, str), "title must be a string!"
+        assert isinstance(divs, list), "divs must be a List of Lists of strings"
+        assert isinstance(css_files, list), "css_files must be a List of strings"
+        assert isinstance(js_files, list), "js_files must be a List of strings"
+        assert isinstance(js_libs, list), "js_libs must be a List of strings"
+
         self.title = title
         self.divs = divs
         self.css_files = css_files
         self.js_files = js_files
         self.js_libs = js_libs
+
+    @staticmethod
+    def format_divs(divs: list):
+        """
+        Format the divs to be used in the report.
+        :param divs: A List of Lists of HTML div's
+        :return: A List of Lists of HTML div's
+        """
+
+        def format_div(_div: str):
+            """
+            Format the div to be used in the report.
+            :param _div: An HTML div
+            :return: An HTML div
+            """
+            if not isinstance(_div, str):
+                raise TypeError("divs must be a List of Lists of strings (max 2 dimension, but can be only one-dim!")
+
+            # Check whether this is an div tag
+
+            return _div
+
+        results = []
+        for div in divs:
+            if isinstance(div, list):
+                results.append(Report.format_divs(div))
+            elif isinstance(div, str):
+                results.append(format_div(div))
+            else:
+                raise TypeError("Divs can only contain strings!")
+        return results
 
     def write(self, output_filepath):
         """
