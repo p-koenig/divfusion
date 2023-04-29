@@ -52,8 +52,6 @@ class Report:
             if not isinstance(_div, str):
                 raise TypeError("divs must be a List of Lists of strings (max 2 dimension, but can be only one-dim!")
 
-            # Check whether this is an div tag
-
             return _div
 
         results = []
@@ -79,6 +77,31 @@ class Report:
         Generate the HTML for the report.
         :return: The HTML for the report
         """
+
+        def add_divs(divs, new_container):
+            """
+            Adds divs recursively to a string and then return this string.
+            :param new_container:
+            :param divs:
+            :return:
+            """
+            divs_string = ''
+            if new_container:
+                divs_string += '<div class="container">\n'
+            for element in divs:
+                if new_container:
+                    divs_string += '<div class="row">\n'
+                else:
+                    divs_string += '<div class="col-md-6">\n'
+                if isinstance(element, list):
+                    divs_string += add_divs(element, new_container=(not new_container))
+                else:  # element is a string
+                    divs_string += f"{element}\n"
+                divs_string += '</div>\n'
+            if new_container:
+                divs_string += '</div>\n'
+            return divs_string
+
         html = '<html>\n'
         html += '<head>\n'
         html += '<title>{}</title>\n'.format(self.title)
@@ -90,15 +113,7 @@ class Report:
             html += '<script src="{}"></script>\n'.format(js_file)
         html += '</head>\n'
         html += '<body>\n'
-        html += '<div class="container">\n'
-        for row in self.divs:
-            html += '<div class="row">\n'
-            for div in row:
-                html += '<div class="col-md-6">\n'
-                html += div
-                html += '</div>\n'
-            html += '</div>\n'
-        html += '</div>\n'
+        html += add_divs(self.divs, True)
         html += '</body>\n'
         html += '</html>\n'
         return html
