@@ -37,8 +37,11 @@ Next, create a new instance of `Report` by passing the following parameters:
 
 ```python
 report = Report(title="My Report",
-                divs=[["<h1>Heading 1</h1>", "<p>Paragraph 1</p>"], ["<h2>Heading 2</h2>", "<p>Paragraph 2</p>"]])
+                divs=[["<h1>Heading 1</h1>", "<div>some plotly figure</div>"], 
+                      ["<div>Some Info Text</div>", "<div>HTML Table</div>"]])
 ```
+The Elements will be placed as the nested list of divs suggests: Columns horizontally, Rows vertically.
+Optionally you can add custom css files, js files or js script tags.
 
 To generate the HTML report, call the `write` method and pass the file path where you want to save the report:
 
