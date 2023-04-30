@@ -2,3 +2,4 @@
 /dist/
 /.idea
 /static_html.egg-info/
+/src.static_html.egg-info/
