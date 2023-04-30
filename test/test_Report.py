@@ -19,7 +19,7 @@ import plotly.express as px
 import pytest
 from pyfakefs.fake_filesystem_unittest import Patcher
 
-from static_html.Report import Report
+from static_html import Report
 
 
 @pytest.fixture(params=["MINIMAL_TEST", "PLOTLY_TEST", "MULTIROW_TEST", "COMPLEX_TEST"])
