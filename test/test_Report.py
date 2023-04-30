@@ -27,7 +27,7 @@ def report(report_type):
             divs = [px.scatter(x=[1, 2, 3], y=[1, 2, 3]).to_html(full_html=False,
                                                                  include_plotlyjs=False,
                                                                  div_id="test_px").replace("\n", "")]
-            js_libs = ["plotly-2.20.0.min.js"]
+            js_libs = ["https://cdn.plot.ly/plotly-2.20.0.min.js®"]
             report = Report(title, divs, js_libs=js_libs)
         case _:
             raise ValueError(f"Unknown test case: {report_type}")
