@@ -50,6 +50,8 @@ class Report:
         self.js_files = js_files
         self.js_libs = js_libs
 
+        self.divs = self.format_divs(self.divs)
+
     @staticmethod
     def format_divs(divs: list):
         """
@@ -65,7 +67,7 @@ class Report:
             :return: An HTML div
             """
             if not isinstance(_div, str):
-                raise TypeError("divs must be a List of Lists of strings (max 2 dimension, but can be only one-dim!")
+                raise TypeError("divs must be a List of Lists of strings")
 
             return _div
 

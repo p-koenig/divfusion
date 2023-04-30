@@ -12,3 +12,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  ==============================================================================
+
+from pkg_resources import get_distribution, DistributionNotFound
+
+try:
+    __version__ = get_distribution(__name__).version
+except DistributionNotFound:
+    raise DistributionNotFound("Could not find the package version. Did you install it?")
