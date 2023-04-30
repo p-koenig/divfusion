@@ -15,7 +15,7 @@
 
 class Report:
     """
-    This is the main class for the static_html.
+    This is the main class for divfusion.
     It takes a List of Lists of HTML div's and writes them to disk.
     The placement of the div's is traditional C-Style, with columns being added horizontally and rows vertically.
     """

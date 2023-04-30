@@ -19,7 +19,7 @@ import plotly.express as px
 import pytest
 from pyfakefs.fake_filesystem_unittest import Patcher
 
-from static_html import Report
+from divfusion import Report
 
 
 @pytest.fixture(params=["MINIMAL_TEST", "PLOTLY_TEST", "MULTIROW_TEST", "COMPLEX_TEST"])
@@ -38,7 +38,7 @@ def report(report_type):
 
     Returns
     -------
-    Report: static_html.Report
+    Report: divfusion.Report
     """
     title = report_type
     match report_type:
