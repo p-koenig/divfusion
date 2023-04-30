@@ -7,7 +7,7 @@ from pyfakefs.fake_filesystem_unittest import Patcher
 from static_html.Report import Report
 
 
-@pytest.fixture(params=["MINIMAL_TEST", "PLOTLY_TEST"])
+@pytest.fixture(params=["MINIMAL_TEST", "PLOTLY_TEST", "MULTIROW_TEST", "COMPLEX_TEST"])
 def report_type(request):
     return request.param
 
@@ -27,8 +27,30 @@ def report(report_type):
             divs = [px.scatter(x=[1, 2, 3], y=[1, 2, 3]).to_html(full_html=False,
                                                                  include_plotlyjs=False,
                                                                  div_id="test_px").replace("\n", "")]
-            js_libs = ["https://cdn.plot.ly/plotly-2.20.0.min.js®"]
+            js_libs = ["https://cdn.plot.ly/plotly-2.20.0.min.js"]
             report = Report(title, divs, js_libs=js_libs)
+        case "MULTIROW_TEST":
+            divs = [["<div>Test Content Row 1, Full Width</div>"],
+                    ["<div>Test Content Row 2, Half Width left</div>",
+                     "<div>Test Content Row 2, Half Width right</div>"],
+                    ["<div>Test Content Row 3, Third Width left</div>",
+                     "<div>Test Content Row 3, Third Width middle</div>",
+                     "<div>Test Content Row 3, Third Width right</div>"]
+                    ]
+            report = Report(title, divs)
+        case "COMPLEX_TEST":
+            divs = [["LEFT SIDEBAR",
+                     [
+                         ["<div>Row 1, Full Width</div>"],
+                         ["<div>Row 2, Half Width left</div>",
+                          "<div>Row 2, Half Width right</div>"],
+                         ["<div>Row 3, Third Width left</div>",
+                          "<div>Row 3, Third Width middle</div>",
+                          "<div>Row 3, Third Width right</div>"]
+                     ]
+                     ]
+                    ]
+            report = Report(title, divs)
         case _:
             raise ValueError(f"Unknown test case: {report_type}")
 
