@@ -54,7 +54,8 @@ Here's an example of how to use `divfusion.Report`:
 from divfusion import Report
 
 report = Report(title="My Report",
-                divs=[["<h1>Heading 1</h1>", "<p>Paragraph 1</p>"], ["<h2>Heading 2</h2>", "<p>Paragraph 2</p>"]])
+                divs=[["<h1>Heading 1</h1>", "<p>Paragraph 1</p>"],
+                      ["<h2>Heading 2</h2>", "<p>Paragraph 2</p>"]])
 report.write("path/to/report.html")
 ```
 
