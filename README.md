@@ -62,6 +62,10 @@ This will generate an HTML report with the title "My Report" and two rows of HTM
 and a paragraph, and the second row contains a subheading and another paragraph. The report will be saved to the file
 path specified.
 
+## Dependencies
+
+Currently `divfusion` does not require any dependencies.
+
 ## Future Work
 
 - Add support for custom css
