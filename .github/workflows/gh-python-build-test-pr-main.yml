@@ -23,14 +23,15 @@ jobs:
           semver_only: true
       - id: set_version
         run: hatch version ${{ steps.get_latest_semver_tag.outputs.tag }}
+      - id: get_version
+        run: echo "dir=$(hatch version)" >> $GITHUB_OUTPUT
       - id: build_hatch
-        run: |
-          echo "$(hatch build | tr '\[|\]' ' ' | tail -n 1 )" >> $GITHUB_OUTPUT
+        run: hatch build
       - id: upload_build
         uses: actions/upload-artifact@v2
         with:
           name: current_wheel
-          path: steps.build_hatch.outputs.*
+          path: dist/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
 
   devfusion_test:
     strategy:
