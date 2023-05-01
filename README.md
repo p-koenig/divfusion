@@ -68,7 +68,7 @@ path specified.
 
 ## Dependencies
 
-Currently `divfusion` does not require any dependencies.
+Currently `divfusion` does not require any dependencies. Python >= 3.10 is required.
 
 ## Future Work
 
