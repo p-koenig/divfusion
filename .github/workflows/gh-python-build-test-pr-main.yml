@@ -42,7 +42,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - id: install_devfusion
         run: |
-          pip install '${{ ${{ needs.job1.outputs.output2 }} | tail -n 1 }}[test]'
+          pip install '${{ needs.job1.outputs.output2.split("\n")[-1] }}[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
