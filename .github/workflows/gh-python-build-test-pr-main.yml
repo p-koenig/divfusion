@@ -21,7 +21,7 @@ jobs:
       - id: install_hatch
         run: pip install hatch
       - id: set_version
-        run: hatch version ${{ github.ref }}
+        run: hatch version ${{ github.head_ref }}
       - id: get_version_number
         run: echo hatch version >> "$GITHUB_OUTPUT"
       - id: build_hatch
