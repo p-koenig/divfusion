@@ -14,16 +14,14 @@ jobs:
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - id: install_hatch
-          - run: pip install hatch
+        run: pip install hatch
       - id: set_version
-          - run: hatch version $(echo "${{ github.ref }}" | sed 's#refs/tags/v##')
+        run: hatch version $(echo "${{ github.ref }}" | sed 's#refs/tags/v##')
       - id: get_version_number
-          - run: echo hatch version >> "$GITHUB_OUTPUT"
+        run: echo hatch version >> "$GITHUB_OUTPUT"
       - id: build_hatch
-          - run: echo hatch build >> "$GITHUB_OUTPUT"
+        run: echo hatch build >> "$GITHUB_OUTPUT"
 
   devfusion_test:
     strategy:
