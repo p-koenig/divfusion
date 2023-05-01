@@ -21,14 +21,14 @@ jobs:
       - id: install_hatch
         run: pip install hatch
       - id: get_latest_semver_tag
-        uses: actions-ecosystem/action-release-label@v1
+        uses: actions-ecosystem/action-get-latest-tag@v1
         with:
           semver_only: true
       - id: set_version
         run: hatch version ${{ steps.get_latest_semver_tag.outputs.tag }}
       - id: build_hatch
         run: |
-          echo "$(hatch build | tail -n 1 )[test]" >> $GITHUB_OUTPUT
+          echo "$(hatch build | tail -n 0 )[test]" >> $GITHUB_OUTPUT
 
   devfusion_test:
     strategy:
