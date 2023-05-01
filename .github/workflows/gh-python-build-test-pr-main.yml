@@ -27,7 +27,7 @@ jobs:
         run: hatch version ${{ steps.get_latest_semver_tag.outputs.tag }}
       - id: build_hatch
         run: |
-          echo "dir=$(hatch build | tail -n 0 )" >> "$GITHUB_OUTPUT"
+          echo "{dir}={$(hatch build | tail -n 1 )}" >> $GITHUB_OUTPUT
 
   devfusion_test:
     strategy:
