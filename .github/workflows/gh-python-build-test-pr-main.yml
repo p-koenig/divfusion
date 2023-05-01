@@ -22,10 +22,9 @@ jobs:
         run: pip install hatch
       - id: set_version
         run: hatch version ${{ github.head_ref }}
-      - id: get_version_number
-        run: echo hatch version >> "$GITHUB_OUTPUT"
       - id: build_hatch
-        run: echo hatch build >> "$GITHUB_OUTPUT"
+        run: |
+          echo "$(hatch build)" >> $GITHUB_OUTPUT
 
   devfusion_test:
     strategy:
