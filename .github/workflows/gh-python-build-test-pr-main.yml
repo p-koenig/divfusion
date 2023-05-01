@@ -30,7 +30,7 @@ jobs:
       - id: upload_build
         uses: actions/upload-artifact@v2
         with:
-          name: current_wheel.whl
+          name: divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
           path: dist/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
 
   devfusion_test:
@@ -43,17 +43,22 @@ jobs:
     needs: devfusion_build
     steps:
       - uses: actions/checkout@v3
-      - id: download_whl
-        uses: actions/download-artifact@v3
-        with:
-          path: artifacts
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - id: install_hatch
+        run: pip install hatch
+      - id: get_version
+        run: echo "dir=$(hatch version)" >> $GITHUB_OUTPUT
+      - id: download_whl
+        uses: actions/download-artifact@v3
+        with:
+          name: divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
+          path: artifacts
       - id: pip_install
         run: |
-          pip install ${{steps.download_whl.outputs.download-path}}/*.whl'[test]'
+          pip install ${{steps.download_whl.outputs.download-path}}/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl'[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
