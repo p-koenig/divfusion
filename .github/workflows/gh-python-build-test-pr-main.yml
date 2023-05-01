@@ -43,10 +43,9 @@ jobs:
     needs: devfusion_build
     steps:
       - uses: actions/checkout@v3
-      - name: Download Build Artifact
+      - id: download_whl
         uses: actions/download-artifact@v3
         with:
-          name: current_wheel.whl
           path: artifacts
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -54,7 +53,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - id: pip_install
         run: |
-          pip install '/home/runner/work/divfusion/divfusion/artifacts/current_wheel.whl[test]'
+          pip install ${{steps.download_whl.outputs.download-path}}/*.whl'[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
