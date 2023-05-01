@@ -1,0 +1,68 @@
+name: gh-python-build-test-pr-main
+
+on:
+  pull_request:
+    branches:
+      - main
+    tags:
+      - v*
+jobs:
+  devfusion_build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: install_hatch
+          - run: pip install hatch
+      - id: set_version
+          - run: hatch version $(echo "${{ github.ref }}" | sed 's#refs/tags/v##')
+      - id: get_version_number
+          - run: echo hatch version >> "$GITHUB_OUTPUT"
+      - id: build_hatch
+          - run: echo hatch build >> "$GITHUB_OUTPUT"
+
+  devfusion_test:
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9, 3.10, 3.11 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    needs: devfusion_build
+    steps:
+      - id: install_devfusion
+          - run: pip install '${{echo "${{needs.job1.outputs.output2}}" | tail -n 1}}[test]'
+      - id: run_tests
+          - run: pytest test/test_report.py --junitxml=test/pytest.xml
+      - id: upload_test_results
+          - uses: actions/upload-artifact@v2
+            with:
+              name: test-results-python-${{ matrix.python-version }}-os-${{ matrix.os }}
+              path: test/pytest.xml
+
+  publish-test-results:
+    needs: devfusion_test
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+    if: always()
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: "artifacts/**/*.xml"
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: "artifacts/**/*.xml"
+          check_name: "Test Results (${{ github.event.workflow_run.event || github.event_name }})"
+          check_run_annotations: "all tests, skipped tests"
+          report_individual_runs: "true"

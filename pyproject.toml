@@ -1,6 +1,45 @@
 [build-system]
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.setuptools_scm]
-version_scheme = "release-branch-semver"
+[project]
+name = 'divfusion'
+dynamic = ["version"]
+description = 'Super-simple self-contained interactive HTML-Reports combining elements from various sources. Manages styling and layout via customisable css.'
+readme = 'README.md'
+authors = [
+    { name = 'Paul Koenig', email = '45401982+p-koenig@users.noreply.github.com' }
+]
+license = { file = 'LICENSE.md' }
+requires-python = '>=3.7'
+# dependencies = [] # No dependencies for now
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: Console',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: Apache Software License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Topic :: Scientific/Engineering :: Visualization'
+]
+keywords = [
+    "visualization", "javascript", "css", "html", "plotly", "pandas", "python", "report", "matplotlib"
+]
+
+[project.urls]
+homepage = 'https://github.com/p-koenig/divfusion'
+documentation = 'https://github.com/p-koenig/divfusion'
+repository = 'https://github.com/p-koenig/divfusion'
+
+[project.optional-dependencies]
+test = ['pytest~=7.1.2', 'pyfakefs~=5.2.2', 'plotly~=5.14.1']
+
+[tool.hatch.version]
+path = "src/divfusion/__about__.py"
