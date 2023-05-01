@@ -54,7 +54,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - id: pip_install
         run: |
-          pip install 'artifacts/current_wheel.whl[test]'
+          pip install '/home/runner/work/divfusion/divfusion/artifacts/current_wheel.whl[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
