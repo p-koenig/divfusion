@@ -46,7 +46,7 @@ jobs:
       - env:
           OUTPUT1: ${{ needs.devfusion_build.outputs.output1 }}
         run: |
-          pip install '$OUTPUT1[test]'
+          pip install "$OUTPUT1"'[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
