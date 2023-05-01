@@ -60,7 +60,7 @@ jobs:
         run: |
           pip install ${{steps.download_whl.outputs.download-path}}/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl'[test]'
       - id: run_tests
-        run: pytest test/test_report.py --junitxml=test/pytest.xml
+        run: pytest --junitxml=test/pytest.xml
       - id: upload_test_results
         uses: actions/upload-artifact@v2
         with:
