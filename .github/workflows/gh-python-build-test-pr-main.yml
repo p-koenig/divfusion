@@ -14,6 +14,10 @@ jobs:
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
       - id: install_hatch
         run: pip install hatch
       - id: set_version
@@ -28,10 +32,17 @@ jobs:
       matrix:
         python-version: [ 3.7, 3.8, 3.9, 3.10, 3.11 ]
         os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     needs: devfusion_build
     steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
       - id: install_devfusion
-        run: pip install '${{ needs.job1.outputs.output2 | tail -n 1 }}[test]'
+        run: |
+          pip install '${{ needs.job1.outputs.output2 | tail -n 1 }}[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
