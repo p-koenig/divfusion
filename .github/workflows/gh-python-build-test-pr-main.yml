@@ -9,8 +9,6 @@ on:
 jobs:
   devfusion_build:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.build_hatch.outputs.dir }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -27,7 +25,12 @@ jobs:
         run: hatch version ${{ steps.get_latest_semver_tag.outputs.tag }}
       - id: build_hatch
         run: |
-          echo "{dir}={$(hatch build | tail -n 1 )}" >> $GITHUB_OUTPUT
+          echo "$(hatch build | tail -n 1 )" >> $GITHUB_OUTPUT
+      - id: upload_build
+        uses: actions/upload-artifact@v2
+        with:
+          name: current_wheel
+          path: steps.build_hatch.outputs.*
 
   devfusion_test:
     strategy:
@@ -39,14 +42,18 @@ jobs:
     needs: devfusion_build
     steps:
       - uses: actions/checkout@v3
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: current_wheel
+          path: artifacts/current_wheel
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - env:
-          OUTPUT1: ${{ needs.devfusion_build.outputs.output1 }}
+      - id: pip_install
         run: |
-          pip install "$OUTPUT1"'[test]'
+          pip install 'artifacts/current_wheel[test]'
       - id: run_tests
         run: pytest test/test_report.py --junitxml=test/pytest.xml
       - id: upload_test_results
