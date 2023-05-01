@@ -12,7 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  ==============================================================================
-
+import os
 import re
 
 import plotly.express as px
@@ -95,6 +95,8 @@ def expected_html(report_type):
 
     """
     try:
+        print(os.getcwd())
+        print(os.path.dirname('../resources_test/)'))
         with open(f"../resources_test/{report_type}.html") as f:
             return f.read()
     except FileNotFoundError:
