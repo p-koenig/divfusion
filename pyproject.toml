@@ -43,4 +43,4 @@ test = ['pytest~=7.1.2', 'pyfakefs~=5.2.2', 'plotly~=5.14.1']
 
 [tool.hatch.version]
 path = "src/divfusion/__about__.py"
-validate-bump = "false"
+validate-bump = false
