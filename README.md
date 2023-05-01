@@ -78,7 +78,7 @@ Currently `divfusion` does not require any dependencies. Python >= 3.10 is requi
 
 ## Contribution
 
-I welcome any and all contributions, no matter what size. Please feel free to open an issue or pull request.
+I welcome any and all contributions, no matter what size. Please feel free to open an issue or pull request against dev.
 
 ## License
 
