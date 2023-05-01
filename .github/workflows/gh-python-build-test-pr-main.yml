@@ -51,6 +51,7 @@ jobs:
         run: pip install hatch
       - id: get_version
         run: echo "dir=$(hatch version)" >> $GITHUB_OUTPUT
+        shell: bash
       - id: download_whl
         uses: actions/download-artifact@v3
         with:
