@@ -10,7 +10,7 @@ jobs:
   devfusion_build:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.build_hatch.outputs }}
+      output1: ${{ steps.build_hatch.outputs.dir }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -27,11 +27,12 @@ jobs:
         run: hatch version ${{ steps.get_latest_semver_tag.outputs.tag }}
       - id: build_hatch
         run: |
-          echo "$(hatch build | tail -n 0 )" >> $GITHUB_OUTPUT
+          echo "dir=$(hatch build | tail -n 0 )" >> $GITHUB_OUTPUT
 
   devfusion_test:
     strategy:
       matrix:
+        fail-fast: false
         python-version: [ "3.7", "3.8", "3.9", "3.10", "3.11" ]
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
