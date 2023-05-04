@@ -1,4 +1,4 @@
-name: gh-python-build-test-pr-main
+name: divfusion_pr_main
 
 on:
   pull_request:
@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: dev
+          fetch-depth: '0'
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
@@ -29,11 +32,13 @@ jobs:
         run: echo "dir=$(hatch version)" >> $GITHUB_OUTPUT
       - id: build_hatch
         run: hatch build
-      - id: upload_build
-        uses: actions/upload-artifact@v2
-        with:
-          name: divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
-          path: dist/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
+      - id: commit_build
+        run: |
+          git config user.name Github-Actions-Bot
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Build ${{ steps.get_version.outputs.dir }}"
+          git push
 
   devfusion_test:
     strategy:
@@ -45,6 +50,9 @@ jobs:
     needs: devfusion_build
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: dev
+          fetch-depth: '0'
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -54,14 +62,9 @@ jobs:
       - id: get_version
         run: echo "dir=$(hatch version)" >> $GITHUB_OUTPUT
         shell: bash
-      - id: download_whl
-        uses: actions/download-artifact@v3
-        with:
-          name: divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl
-          path: artifacts
       - id: pip_install
         run: |
-          pip install ${{steps.download_whl.outputs.download-path}}/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl'[test]'
+          pip install dist/divfusion-${{ steps.get_version.outputs.dir }}-py3-none-any.whl'[test]'
       - id: run_tests
         run: pytest --junitxml=test/pytest.xml
       - id: upload_test_results

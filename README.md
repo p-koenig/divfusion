@@ -8,7 +8,7 @@ If used with plotly, this closes between a single-figure plotly export and a ful
 needs to be hosted somewhere. Using this Library, all interactivity of plotly is preserved (hovering, zooming, buttons,
 dropdowns, etc.). In addition to that, you can add html-exports of your pd.DataFrames, images or any other HTML content.
 `divfusion` brings all of this together and manges the layout and style of the report for you (bring your own css is
-possible).
+possible in a future version).
 
 The resulting html file is completely self-contained and can be opened in any browser on any device.
 
@@ -36,7 +36,7 @@ Next, create a new instance of `Report` by passing the following parameters:
     * plotly figures
     * pandas dataframes
     * pandas series
-    * All nested combinations of the above
+    * All nested combinations of the above (first dimension is columns, second dimension is rows)
 * `css_files` (optional) - The CSS files to include (list)
 * `js_files` (optional) - The JS files to include (list)
 * `js_libs` (optional) - A list of JS libraries to include (list)
@@ -59,7 +59,7 @@ report.write("path/to/report.html")
 
 ## Dependencies
 
-Currently `divfusion` does not require any dependencies. Python >= 3.10 is required.
+Currently `divfusion` requires pandas>=1.4.0 and plotly>=5.0.0. Python >= 3.10 is required.
 
 ## Future Work
 
