@@ -1,8 +1,8 @@
 # divfusion
 
-`divfusion` takes multiple HTML elements and generates a stand-alone HTML-Report while managing styling and layout. 
-In practise, these elements ('divs') would originate from other Python modules, especially those that generate plots 
-and provide a html export (e.g. `matplotlib`, `seaborn`, `plotly`).
+`divfusion` takes multiple HTML elements and generates a stand-alone HTML-Report while managing styling and layout.
+In practise, these elements ('divs') would originate from other Python modules, especially those that generate plots
+and provide a html export (e.g. `plotly`).
 
 If used with plotly, this closes between a single-figure plotly export and a full-fledged plotly-dash server, which
 needs to be hosted somewhere. Using this Library, all interactivity of plotly is preserved (hovering, zooming, buttons,
