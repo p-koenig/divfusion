@@ -59,7 +59,7 @@ report.write("path/to/report.html")
 
 ## Dependencies
 
-Currently `divfusion` does not require any dependencies. Python >= 3.10 is required.
+Currently `divfusion` requires pandas>=1.7.0 and plotly>=5.0.0. Python >= 3.10 is required.
 
 ## Future Work
 
