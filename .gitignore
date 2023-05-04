@@ -1,5 +1,3 @@
 /build/
-/dist/
+/dist/divfusion-*/
 /.idea
-/divfusion.egg-info.*/
-/src/divfusion.egg-info/
