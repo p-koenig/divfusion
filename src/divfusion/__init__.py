@@ -13,11 +13,4 @@
 #  limitations under the License.
 #  ==============================================================================
 
-from pkg_resources import get_distribution, DistributionNotFound
-
 from .Report import Report
-
-try:
-    __version__ = get_distribution(__name__).version
-except DistributionNotFound:
-    raise DistributionNotFound("Could not find the package version. Did you install it?")

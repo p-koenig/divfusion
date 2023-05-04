@@ -14,6 +14,7 @@
 #  ==============================================================================
 import re
 
+import pandas as pd
 import plotly.express as px
 import pytest
 from pyfakefs.fake_filesystem_unittest import Patcher
@@ -73,7 +74,12 @@ def report(report_type):
                     ]
             report = Report(title, divs)
         case "DIFFERENT_TYPES_TEST":
-            return NotImplementedError("Not implemented yet.TEST")
+            divs = ["This is a test String",
+                    px.scatter(x=[1, 2, 3], y=[1, 2, 3]),
+                    "<div>Test Content</div>",
+                    pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]}),
+                    pd.Series([1, 2, 3, 4, 5, 6])]
+            report = Report(title, divs)
         case _:
             raise ValueError(f"Unknown test case: {report_type}")
 

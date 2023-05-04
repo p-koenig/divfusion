@@ -1,0 +1,43 @@
+name: Build and Upload Python Package
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  divfusion_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - id: install_hatch
+        run: pip install hatch
+      - id: get_latest_semver_tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        with:
+          semver_only: true
+      - id: set_version
+        run: hatch version ${{ steps.get_latest_semver_tag.outputs.tag }}
+      - id: get_version
+        run: echo "dir=$(hatch version)" >> $GITHUB_OUTPUT
+      - id: build_hatch
+        run: hatch build
+      - id: commit_build
+        run: |
+          git config user.name Github Actions Bot
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Build ${{ steps.get_version.outputs.dir }}"
+          git push
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
