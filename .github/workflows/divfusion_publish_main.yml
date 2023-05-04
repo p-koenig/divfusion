@@ -1,4 +1,4 @@
-name: Upload Python Package
+name: Build and Upload Python Package
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   divfusion_build:
