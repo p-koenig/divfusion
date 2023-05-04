@@ -73,7 +73,7 @@ def report(report_type):
                     ]
             report = Report(title, divs)
         case "DIFFERENT_TYPES_TEST":
-            return NotImplementedError("Not implemented yet.")
+            return NotImplementedError("Not implemented yet.TEST")
         case _:
             raise ValueError(f"Unknown test case: {report_type}")
 
