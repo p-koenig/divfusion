@@ -31,15 +31,22 @@ from divfusion import Report
 Next, create a new instance of `Report` by passing the following parameters:
 
 * `title` - The title of the report (string)
-* `divs` - A list of HTML divs, can be nested (list)
+* `div_like` - A list of div_like elements. Can be
+    * strings
+    * plotly figures
+    * pandas dataframes
+    * pandas series
+    * All nested combinations of the above
 * `css_files` (optional) - The CSS files to include (list)
 * `js_files` (optional) - The JS files to include (list)
 * `js_libs` (optional) - A list of JS libraries to include (list)
 
 ```python
 report = Report(title="My Report",
-                divs=[["<h1>Heading 1</h1>", "<div>some plotly figure</div>"], 
-                      ["<div>Some Info Text</div>", "<div>HTML Table</div>"]])
+                div_like=[[px.scatter(x=[1, 2, 3], y=[1, 2, 3]), "<div>some text</div>"],
+                          ["<div>Some Info Text</div>", "<div>HTML Table</div>"],
+                          [pd.DataFrame([[1, 2, 3], [4, 5, 6]]), pd.Series([1, 2, 3])]
+                          ])
 ```
 The Elements will be placed as the nested list of divs suggests: Columns horizontally, Rows vertically.
 Optionally you can add custom css files, js files or js script tags.
@@ -49,23 +56,6 @@ To generate the HTML report, call the `write` method and pass the file path wher
 ```python
 report.write("path/to/report.html")
 ```
-
-## Example
-
-Here's an example of how to use `divfusion.Report`:
-
-```python
-from divfusion import Report
-
-report = Report(title="My Report",
-                divs=[["<h1>Heading 1</h1>", "<p>Paragraph 1</p>"],
-                      ["<h2>Heading 2</h2>", "<p>Paragraph 2</p>"]])
-report.write("path/to/report.html")
-```
-
-This will generate an HTML report with the title "My Report" and two rows of HTML divs. The first row contains a heading
-and a paragraph, and the second row contains a subheading and another paragraph. The report will be saved to the file
-path specified.
 
 ## Dependencies
 
