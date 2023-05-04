@@ -36,7 +36,7 @@ Next, create a new instance of `Report` by passing the following parameters:
     * plotly figures
     * pandas dataframes
     * pandas series
-    * All nested combinations of the above
+    * All nested combinations of the above (first dimension is columns, second dimension is rows)
 * `css_files` (optional) - The CSS files to include (list)
 * `js_files` (optional) - The JS files to include (list)
 * `js_libs` (optional) - A list of JS libraries to include (list)
