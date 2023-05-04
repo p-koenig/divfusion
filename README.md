@@ -8,7 +8,7 @@ If used with plotly, this closes between a single-figure plotly export and a ful
 needs to be hosted somewhere. Using this Library, all interactivity of plotly is preserved (hovering, zooming, buttons,
 dropdowns, etc.). In addition to that, you can add html-exports of your pd.DataFrames, images or any other HTML content.
 `divfusion` brings all of this together and manges the layout and style of the report for you (bring your own css is
-possible).
+possible in a future version).
 
 The resulting html file is completely self-contained and can be opened in any browser on any device.
 
