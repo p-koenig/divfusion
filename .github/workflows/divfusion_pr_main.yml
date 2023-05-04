@@ -1,4 +1,4 @@
-name: gh-python-build-test-pr-main
+name: divfusion_pr_main
 
 on:
   pull_request:

@@ -1,4 +1,4 @@
-name: Build and Upload Python Package
+name: divfusion_publish_main
 
 on:
   push:
