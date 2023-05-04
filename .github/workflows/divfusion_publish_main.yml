@@ -31,7 +31,7 @@ jobs:
         run: hatch build
       - id: commit_build
         run: |
-          git config user.name Github Actions Bot
+          git config user.name Github-Actions-Bot
           git config user.email github-actions@github.com
           git add .
           git commit -m "Build ${{ steps.get_version.outputs.dir }}"
