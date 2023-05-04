@@ -21,7 +21,7 @@ from pyfakefs.fake_filesystem_unittest import Patcher
 from divfusion import Report
 
 
-@pytest.fixture(params=["MINIMAL_TEST", "PLOTLY_TEST", "MULTIROW_TEST", "COMPLEX_TEST"])
+@pytest.fixture(params=["MINIMAL_TEST", "PLOTLY_TEST", "MULTIROW_TEST", "COMPLEX_TEST", "DIFFERENT_TYPES_TEST"])
 def report_type(request):
     return request.param
 
@@ -72,6 +72,8 @@ def report(report_type):
                      ]
                     ]
             report = Report(title, divs)
+        case "DIFFERENT_TYPES_TEST":
+            return NotImplementedError("Not implemented yet.TEST")
         case _:
             raise ValueError(f"Unknown test case: {report_type}")
 
